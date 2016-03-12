@@ -1,17 +1,20 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+# Ruby on Rails Starter Overview
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
+The Ruby on Rails Starter demonstrates a simple, reusable Ruby web application based on the Rails framework.
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
+## Run the app locally
 
-Finally, consider defining some sprints and work items in Track & Plan to give 
-interested developers a sense of your cadence and upcoming enhancements.
+1. [Install Ruby][]
+2. Download and extract the starter code from the Bluemix UI
+3. cd into the app directory
+4. Run `gem install bundler` to install bundler
+5. Run `bundler install` to install app dependencies
+6. Run `rails server`
+7. Access the running app in a browser at http://localhost:3000
+
+## Decomposition Instructions
+
+The command `rails new <app name>` is used to create the files and folders that make up the structure of a Rails application. They are described in the [Getting Started with Rails][] guide.
+
+[Install Ruby]: https://www.ruby-lang.org/en/documentation/installation
+[Getting Started with Rails]: http://guides.rubyonrails.org/v3.2.8/getting_started.html#creating-the-blog-application

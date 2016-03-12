@@ -1,0 +1,12 @@
+applications:
+- path: .
+  memory: 64M
+  instances: 1
+  domain: au-syd.mybluemix.net
+  name: QuickInsure
+  host: qi
+  disk_quota: 1024M
+  services:
+  - Mobile Client Access-9o
+  - IBM Push Notifications-u9
+  - Cloudant NoSQL DB-s6
