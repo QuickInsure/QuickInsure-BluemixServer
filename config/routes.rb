@@ -12,6 +12,9 @@ RailsStarter::Application.routes.draw do
   get ':controller(/:action(/:id))'
   root :to => 'say#hello'
 
+  post ':controller/:action'
+  #get ':controller/:action'
+
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
