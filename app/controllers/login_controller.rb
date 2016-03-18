@@ -6,6 +6,8 @@ class LoginController < ApplicationController
 		username = params[:username]
 		password = params[:password]
 
+        puts "in mobileAuth"
+
 		if username.to_s == "" && password.to_s == ""
 			flag = nil
 		else
@@ -14,7 +16,7 @@ class LoginController < ApplicationController
 				flag = true
 			end
 		end
-
+        puts "in mobileAuth beforerender"
 		render :text => "HI you are authenticated!".to_s
 	end
 
