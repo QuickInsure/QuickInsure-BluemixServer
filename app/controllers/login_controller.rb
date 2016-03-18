@@ -164,7 +164,7 @@ class LoginController < ApplicationController
         responseHash = {}
         errMsg = ""
         
-        credentials = clientId.to_s + "+" token.to_s + "+" + accNo.to_s
+        credentials = clientId.to_s + "+" + token.to_s + "+" + accNo.to_s
         isValidCredentials, errMsg = validateCredentials(credentials)
  
         if fromdate > todate
