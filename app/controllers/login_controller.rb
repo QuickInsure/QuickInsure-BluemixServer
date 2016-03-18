@@ -15,7 +15,7 @@ class LoginController < ApplicationController
 			end
 		end
 
-		render :text => flag.to_s
+		render :text => "HI you are authenticated!".to_s
 	end
 
     def appAuthenticate
