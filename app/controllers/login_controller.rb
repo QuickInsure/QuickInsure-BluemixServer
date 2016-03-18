@@ -17,7 +17,8 @@ class LoginController < ApplicationController
 			end
 		end
         puts "in mobileAuth beforerender"
-		render :text => "HI you are authenticated!".to_s
+        return "HI you are authenticated!".to_s
+		#render :text => "HI you are authenticated!".to_s
 	end
 
     def appAuthenticate
