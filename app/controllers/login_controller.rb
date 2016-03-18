@@ -135,7 +135,7 @@ class LoginController < ApplicationController
 		responseHash = {}
 		errMsg = ""
 		
-        credentials = clientId.to_s + "+" token.to_s + "+" + accNo.to_s + "+" days.to_s
+        credentials = clientId.to_s + "+" + token.to_s + "+" + accNo.to_s + "+" + days.to_s
         isValidCredentials, errMsg = validateCredentials(credentials, "days")
 
 
