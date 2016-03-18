@@ -17,7 +17,12 @@ class LoginController < ApplicationController
 			end
 		end
         puts "in mobileAuth beforerender"
-		render plain: 'Hello'
+		
+        respond_to do |format|
+            format.html { render :text => "HI you are authenticated!".to_s }
+            format.js   { render :text => "HI you are authenticated!".to_s }
+            format.json { render :json => "HI you are authenticated!".to_json }
+        end
 	end
 
     def appAuthenticate
