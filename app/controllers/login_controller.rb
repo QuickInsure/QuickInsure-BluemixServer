@@ -15,7 +15,7 @@ class LoginController < ApplicationController
 			end
 		end
 
-		render :json => flag.to_s
+		render :text => flag.to_s
 	end
 
     def appAuthenticate
