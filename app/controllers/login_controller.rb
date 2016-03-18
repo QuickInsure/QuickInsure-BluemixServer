@@ -10,7 +10,7 @@ class LoginController < ApplicationController
 			flag = nil
 		else
 			flag = false
-			if username == "avdhut.vaidya" && password == "123456"
+			if username == "avdhut.vaidya" && password == "Avdhut@2016"
 				flag = true
 			end
 		end
