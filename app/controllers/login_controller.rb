@@ -25,7 +25,7 @@ class LoginController < ApplicationController
         responseHash = {}
         errMsg = ""
         
-        credentials = clientId.to_s + "+" password.to_s
+        credentials = clientId.to_s + "+" + password.to_s
         isValidCredentials, errMsg = validateCredentials(credentials)
 
 
@@ -52,7 +52,7 @@ class LoginController < ApplicationController
 		responseHash = {}
 		errMsg = ""
 		
-        credentials = clientId.to_s + "+" token.to_s + "+" + accNo.to_s
+        credentials = clientId.to_s + "+" + token.to_s + "+" + accNo.to_s
         isValidCredentials, errMsg = validateCredentials(credentials)
 
 
@@ -81,7 +81,7 @@ class LoginController < ApplicationController
 		responseHash = {}
 		errMsg = ""
 		
-        credentials = clientId.to_s + "+" token.to_s + "+" + accNo.to_s + "+" custid.to_s
+        credentials = clientId.to_s + "+" + token.to_s + "+" + accNo.to_s + "+" + custid.to_s
         isValidCredentials, errMsg = validateCredentials(credentials, nil)
 
 
@@ -108,7 +108,7 @@ class LoginController < ApplicationController
 		responseHash = {}
 		errMsg = ""
 		
-        credentials = clientId.to_s + "+" token.to_s + "+" + accNo.to_s
+        credentials = clientId.to_s + "+" + token.to_s + "+" + accNo.to_s
         isValidCredentials, errMsg = validateCredentials(credentials, "number")
 
         if isValidCredentials
