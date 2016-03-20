@@ -68,15 +68,15 @@ class LoginController < ApplicationController
             # credentials = username.to_s + "+" + password.to_s
             # isValidCredentials, errMsg = validateCredentials(credentials)
 
-            if isValidCredentials
+            # if isValidCredentials
                 reqParams = {:client_id => username.to_s, :password => password.to_s}
                 requestStr = "http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}"
                 request = Net::HTTP.get(requestStr)
                 response = request
-            else
-                response["code"] = "999"
-                response["message"] = errMsg.to_s
-            end
+            # else
+            #     response["code"] = "999"
+            #     response["message"] = errMsg.to_s
+            # end
         end
 		
         respond_to do |format|
