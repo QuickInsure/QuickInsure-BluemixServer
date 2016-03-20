@@ -81,7 +81,7 @@ class LoginController < ApplicationController
                 requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
                 response = Net::HTTP.get(requestStr)
                 puts response
-                token = JSON.parse(response)[0].token
+                token = JSON.parse(response)[0]["token"]
                 puts token
 
                 reqParams = {:client_id => client_id.to_s, :token => token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
