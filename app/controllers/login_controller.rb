@@ -2,26 +2,88 @@ require 'net/http'
 require 'json'
 
 class LoginController < ApplicationController
+
+    #Function to validate credentials
+    def validateCredentials(str)
+        canAuthenticate = true
+        clientId,token,accNo,custid,days = ""
+
+        if str.split("+").length == 3
+            clientId,token,accNo = str.split("+")[0],str.split("+")[1],str.split("+")[2]
+        elsif str.split("+").length == 4 && type == "number"
+            clientId,token,accNo,custid = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]
+        elsif str.split("+").length == 4 && type == "days"
+            clientId,token,accNo,days = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]     
+        end 
+
+        if clientId.to_s.length == 0
+            errMsg = "Client Id cannot be blank."
+            canAuthenticate = false
+        end
+        
+        if !clientId.to_s.length >= 10 || !clientId.to_s.length <= 50
+            errMsg = "Client Id should be greater than 10 and less than 50 characters"
+            canAuthenticate = false
+        end
+
+        if token.to_s.length != 12
+            errMsg = "Invalid token"
+            canAuthenticate = false
+        end
+        
+        if accNo.to_s.length != 16
+           errMsg = "Invalid account number"
+           canAuthenticate = false
+        end 
+
+        if custid.length != 8 
+            errMsg = "Invalid Customer Id"
+            canAuthenticate = false
+        end
+
+        if !days.to_s.length >= 1 || !days.to_s.length <= 10
+            errMsg = "Number of days should be greater than or equal to 1 and less than or equal to 10"
+            canAuthenticate = false
+        end
+
+        return canAuthenticate, errMsg  
+    end
+
+
+    #Function validate credentials for app login
 	def mobileAuth
 		username = params[:username]
 		password = params[:password]
+        loginType = params[:loginType]
+        response = false
 
-        puts "in mobileAuth"
+        if loginType != "icici" 
+    		if username.to_s != "" && password.to_s != ""
+    			if username == "avdhut.vaidya" && password == "Avdhut@2015"
+    				response = true
+    			end
+    		end
+        else
+            errMsg = ""
+            
+            credentials = username.to_s + "+" + password.to_s
+            isValidCredentials, errMsg = validateCredentials(credentials)
 
-		if username.to_s == "" && password.to_s == ""
-			flag = nil
-		else
-			flag = false
-			if username == "avdhut.vaidya" && password == "123456"
-				flag = true
-			end
-		end
-        puts "in mobileAuth beforerender"
+            if isValidCredentials
+                reqParams = {:client_id => username.to_s, :password => password.to_s}
+                requestStr = "http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}"
+                request = Net::HTTP.get(requestStr)
+                response = request
+            else
+                response["code"] = "999"
+                response["message"] = errMsg.to_s
+            end
+        end
 		
         respond_to do |format|
-            format.html { render :text => "HI you are authenticated!".to_s }
-            format.js   { render :text => "HI you are authenticated!".to_s }
-            format.json { render :json => "HI you are authenticated!".to_json }
+            format.html { render :text => response.to_s }
+            format.js   { render :text => response.to_s }
+            format.json { render :json => response.to_json }
         end
 	end
 
@@ -190,51 +252,6 @@ class LoginController < ApplicationController
            responseHash["message"] = errMsg.to_s
         end
         render :json => responseHash.to_json    
-    end
-
-    def validateCredentials(str)
-    	canAuthenticate = true
-        clientId,token,accNo,custid,days = ""
-
-        if str.split("+").length == 3
-    	    clientId,token,accNo = str.split("+")[0],str.split("+")[1],str.split("+")[2]
-    	elsif str.split("+").length == 4 && type == "number"
-    		clientId,token,accNo,custid = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]
-    	elsif str.split("+").length == 4 && type == "days"
-    		clientId,token,accNo,days = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]		
-    	end	
-
-    	if clientId.to_s.length == 0
-			errMsg = "Client Id cannot be blank."
-			canAuthenticate = false
-		end
-		
-		if !clientId.to_s.length >= 10 || !clientId.to_s.length <= 50
-			errMsg = "Client Id should be greater than 10 and less than 50 characters"
-			canAuthenticate = false
-        end
-
-        if token.to_s.length != 12
-        	errMsg = "Invalid token"
-        	canAuthenticate = false
-        end
-        
-        if accNo.to_s.length != 16
-           errMsg = "Invalid account number"
-           canAuthenticate = false
-        end 
-
-        if custid.length != 8 
-        	errMsg = "Invalid Customer Id"
-        	canAuthenticate = false
-        end
-
-        if !days.to_s.length >= 1 || !days.to_s.length <= 10
-        	errMsg = "Number of days should be greater than or equal to 1 and less than or equal to 10"
-        	canAuthenticate = false
-        end
-
-        return canAuthenticate, errMsg 	
     end
 
 
