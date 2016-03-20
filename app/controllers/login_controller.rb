@@ -73,6 +73,7 @@ class LoginController < ApplicationController
                 requestStr = "http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}"
                 str = URI.escape(requestStr) 
                 uri = URI.parse(str)
+                puts uri
                 request = Net::HTTP.get(uri)
                 response = request
             # else
