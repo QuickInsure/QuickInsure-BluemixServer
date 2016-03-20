@@ -70,11 +70,11 @@ class LoginController < ApplicationController
 
             # if isValidCredentials
                 reqParams = {:client_id => username.to_s, :password => password.to_s}
-                requestStr = "http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}"
-                str = URI.escape(requestStr) 
-                uri = URI.parse(str)
-                puts uri
-                request = Net::HTTP.get(uri)
+                requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
+                # str = URI.escape(requestStr) 
+                # uri = URI.parse(str)
+                puts requestStr
+                request = Net::HTTP.get(requestStr)
                 response = request
             # else
             #     response["code"] = "999"
