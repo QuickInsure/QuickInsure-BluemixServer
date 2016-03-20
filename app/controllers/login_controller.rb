@@ -64,10 +64,9 @@ class LoginController < ApplicationController
     			end
     		end
         else
-            errMsg = ""
-            
-            credentials = username.to_s + "+" + password.to_s
-            isValidCredentials, errMsg = validateCredentials(credentials)
+            # errMsg = ""
+            # credentials = username.to_s + "+" + password.to_s
+            # isValidCredentials, errMsg = validateCredentials(credentials)
 
             if isValidCredentials
                 reqParams = {:client_id => username.to_s, :password => password.to_s}
