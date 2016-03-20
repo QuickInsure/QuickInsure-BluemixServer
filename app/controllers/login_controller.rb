@@ -52,9 +52,17 @@ class LoginController < ApplicationController
 
     #Function validate credentials for app login
 	def mobileAuth
-		username = params[:username]
+        #Request params
+        username = params[:username]
 		password = params[:password]
+        custid = params[:custid]
+        accountno = params[:accountno]
         loginType = params[:loginType]
+
+        #ICICI authentication params
+        client_id = "avdhut.vaidya@gmail.com"
+        client_password = "ICIC8058"
+        token = ""
         response = false
 
         if loginType != "icici" 
@@ -69,13 +77,17 @@ class LoginController < ApplicationController
             # isValidCredentials, errMsg = validateCredentials(credentials)
 
             # if isValidCredentials
-                reqParams = {:client_id => username.to_s, :password => password.to_s}
+                reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
                 requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
-                # str = URI.escape(requestStr) 
-                # uri = URI.parse(str)
+                response = Net::HTTP.get(requestStr)
+                puts response
+                token = JSON.parse(response).token
+                puts token
+
+                reqParams = {:client_id => client_id.to_s, :token => token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
+                requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
                 puts requestStr
-                request = Net::HTTP.get(requestStr)
-                response = request
+                response = Net::HTTP.get(requestStr)
             # else
             #     response["code"] = "999"
             #     response["message"] = errMsg.to_s
