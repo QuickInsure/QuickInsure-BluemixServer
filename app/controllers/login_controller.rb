@@ -150,10 +150,15 @@ class LoginController < ApplicationController
 
 		mapHash = {}
 		if responseHash[0]["code"] == 200
-			responseHash.each do |responseData|
+			responseHash.each_with_index do |responseData, index|
 				if !responseData.has_key?("code")
-					mapHash[responseData["branchname"]] = {
-						"address" => responseData["address"] + "," + responseData["city"] + "-" + responseData["pincode"] + ", " + responseData["state"],
+					if responseData["flag"] == "B"
+						branchname = responseData["branchname"]
+					else
+						branchname = responseData["branchname"] + " " + index.to_s
+					end
+					mapHash[branchname] = {
+						"address" => responseData["address"] + ", " + responseData["city"] + "-" + responseData["pincode"] + ", " + responseData["state"],
 						"ifsc" => responseData["IFSC_CODE"],
 						"phoneno" => responseData["phoneno"],
 						"lattitude" => responseData["lattitude"],
