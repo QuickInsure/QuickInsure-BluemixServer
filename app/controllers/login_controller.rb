@@ -67,7 +67,7 @@ class LoginController < ApplicationController
 	def mobileAuth
         #Request params
         loginType = params[:loginType]
-        responseHash = {:status => false}
+        responseHash = {:status => "invalid"}
 
         if loginType == "mobile"
             mobile = params[:mobile]
@@ -75,7 +75,7 @@ class LoginController < ApplicationController
     		if mobile.to_s != "" && password.to_s != ""
     			if mobile == "9999999999" && password == "123456"
     				responseHash = {
-    					:status => true,
+    					:status => "valid",
     					:data => {
     						:name => "Avdhut Vaidya",
     						:mobile => "9999999999",
@@ -92,7 +92,7 @@ class LoginController < ApplicationController
             if aadhar.to_s != "" && password.to_s != ""
                 if aadhar == "123456" && password == "123456"
     				responseHash = {
-    					:status => true,
+    					:status => "valid",
     					:data => {
     						:name => "Avdhut Vaidya",
     						:mobile => "9999999999",
@@ -109,7 +109,7 @@ class LoginController < ApplicationController
             if email.to_s != "" && password.to_s != ""
                 if email == "avdhut.vaidya@gmail.com" && password == "123456"
     				responseHash = {
-    					:status => true,
+    					:status => "valid",
     					:data => {
     						:name => "Avdhut Vaidya",
     						:mobile => "9999999999",
