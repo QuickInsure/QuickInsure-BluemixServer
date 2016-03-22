@@ -140,6 +140,17 @@ class LoginController < ApplicationController
         render :json => responseHash
 	end
 
+
+	def getBranchATMGarage
+		reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :locate => params[:locate]}
+		requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/BranchAtmLocator#{reqParams.to_query}")
+		puts requestStr
+		responseHash = Net::HTTP.get(requestStr)
+		
+        render :json => responseHash
+	end
+
+
     def appAuthenticate
         clientId = params[:clientId]
         password = params[:password]
