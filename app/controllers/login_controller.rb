@@ -139,8 +139,8 @@ class LoginController < ApplicationController
         end
 		
         respond_to do |format|
-            format.html { render :text => responseHash.to_s }
-            format.js   { render :text => responseHash.to_s }
+            format.html { render :text => responseHash.to_json }
+            format.js   { render :text => responseHash.to_json }
             format.json { render :json => responseHash.to_json }
         end
 	end
