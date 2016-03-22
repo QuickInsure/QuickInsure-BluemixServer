@@ -146,8 +146,24 @@ class LoginController < ApplicationController
 		requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/BranchAtmLocator?#{reqParams.to_query}")
 		puts requestStr
 		responseHash = Net::HTTP.get(requestStr)
+		responseHash = JSON.parse(responseHash)
+
+		mapHash = {}
+		if responseHash[0]["code"] == "200"
+			responseHash.each do |responseData|
+				if responseData["code"].to_s == ""
+					mapHash[responseData.branchname] = {
+						"address" => responseData["address"] + "," + responseData["city"] + "-" + responseData["pincode"] + ", " + responseData["state"],
+						"ifsc" => responseData["IFSC_CODE"],
+						"phoneno" => responseData["phoneno"],
+						"lattitude" => responseData["lattitude"],
+						"longitude" => responseData["longitude"]
+					}
+				end
+			end
+		end
 		
-        render :json => responseHash
+        render :json => mapHash
 	end
 
 
