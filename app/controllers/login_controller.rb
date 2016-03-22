@@ -67,14 +67,23 @@ class LoginController < ApplicationController
 	def mobileAuth
         #Request params
         loginType = params[:loginType]
-        response = false
+        responseHash = {:status => false}
 
         if loginType == "mobile"
             mobile = params[:mobile]
             password = params[:password]
     		if mobile.to_s != "" && password.to_s != ""
     			if mobile == "9999999999" && password == "123456"
-    				response = true
+    				responseHash = {
+    					:status => true,
+    					:data => {
+    						:name => "Avdhut Vaidya",
+    						:mobile => "9999999999",
+    						:email => "avdhut.vaidya@gmail.com",
+    						:aadhar => "123456",
+    						:gender => "Male"
+    					}
+    				}
     			end
     		end
         elsif loginType == "aadhar"
@@ -82,7 +91,16 @@ class LoginController < ApplicationController
             password = params[:password]
             if aadhar.to_s != "" && password.to_s != ""
                 if aadhar == "123456" && password == "123456"
-                    response = true
+    				responseHash = {
+    					:status => true,
+    					:data => {
+    						:name => "Avdhut Vaidya",
+    						:mobile => "9999999999",
+    						:email => "avdhut.vaidya@gmail.com",
+    						:aadhar => "123456",
+    						:gender => "Male"
+    					}
+    				}
                 end
             end
         elsif loginType == "email"
@@ -90,7 +108,16 @@ class LoginController < ApplicationController
             password = params[:password]
             if email.to_s != "" && password.to_s != ""
                 if email == "avdhut.vaidya@gmail.com" && password == "123456"
-                    response = true
+    				responseHash = {
+    					:status => true,
+    					:data => {
+    						:name => "Avdhut Vaidya",
+    						:mobile => "9999999999",
+    						:email => "avdhut.vaidya@gmail.com",
+    						:aadhar => "123456",
+    						:gender => "Male"
+    					}
+    				}
                 end
             end
         else
@@ -104,17 +131,17 @@ class LoginController < ApplicationController
                 reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
                 requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
                 puts requestStr
-                response = Net::HTTP.get(requestStr)
+                responseHash = Net::HTTP.get(requestStr)
             # else
-            #     response["code"] = "999"
-            #     response["message"] = errMsg.to_s
+            #     responseHash["code"] = "999"
+            #     responseHash["message"] = errMsg.to_s
             # end
         end
 		
         respond_to do |format|
-            format.html { render :text => response.to_s }
-            format.js   { render :text => response.to_s }
-            format.json { render :json => response.to_json }
+            format.html { render :text => responseHash.to_s }
+            format.js   { render :text => responseHash.to_s }
+            format.json { render :json => responseHash.to_json }
         end
 	end
 
