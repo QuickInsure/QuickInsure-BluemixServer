@@ -9,7 +9,7 @@ class LoginController < ApplicationController
 		$client_id = "avdhut.vaidya@gmail.com"
 		client_password = "ICIC8058"
 
-		reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
+		reqParams = {:client_id => $client_id.to_s, :password => client_password.to_s}
 		requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
 		response = Net::HTTP.get(requestStr)
 		puts response
