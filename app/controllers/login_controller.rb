@@ -149,7 +149,7 @@ class LoginController < ApplicationController
 		responseHash = JSON.parse(responseHash)
 
 		mapHash = {}
-		if responseHash[0]["code"] == "200"
+		if responseHash[0]["code"] == 200
 			responseHash.each do |responseData|
 				if !responseData.has_key?("code")
 					mapHash[responseData["branchname"]] = {
