@@ -138,11 +138,7 @@ class LoginController < ApplicationController
             # end
         end
 		
-        respond_to do |format|
-            format.html { render :text => responseHash.to_json }
-            format.js   { render :text => responseHash.to_json }
-            format.json { render :json => responseHash.to_json }
-        end
+        render :json => responseHash.to_json
 	end
 
     def appAuthenticate
