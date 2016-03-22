@@ -129,8 +129,8 @@ class LoginController < ApplicationController
 			puts requestStr
 			responseHash = Net::HTTP.get(requestStr)
 
-			if !responseHash.is_empty?
-				reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => responseHash[1]["mobileno"].to_s, :emailid => ""}
+			if responseHash != ""
+				reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => JSON.parse(responseHash)[1]["mobileno"].to_s, :emailid => ""}
 				requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls#{reqParams.to_query}")
 				puts requestStr
 				responseHash = Net::HTTP.get(requestStr)
