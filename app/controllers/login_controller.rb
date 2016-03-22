@@ -312,5 +312,33 @@ class LoginController < ApplicationController
     def sendURLRequest(url, params)
     end
 
+    def getQuickQuote
+    	p "in get Quick Quote"
+        reqParams = Hash.new
+        responseHash = {}
+        errMsg = ""
+
+        carname = params[:carname]
+        registrationNum = params[:registrationNum]
+        regYear = params[:regYear]
+        fuelType = params[:fuelType]
+        rangeA = params[:rangeA]
+        rangeB = params[:rangeA]
+        emailId = params[:emaialId]
+        mobileNumber = params[:mobileNumber]
+        custName = "Swapnil"
+            # custid = params[:custid]
+            # accountno = params[:accountno]
+
+            reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custName => "swapnil", :mobileNo => "8976325523", :emailId => "swapskate@gmail.com", :manufacturere => "BAJAJ", :model => "BYK", :address => "MUMBAI", :rto => "MUMBAI", :regDt => 2016-02-08}
+            requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getQuickQuote?#{reqParams.to_query}")
+            puts requestStr
+            responseHash = Net::HTTP.get(requestStr)
+            puts requestStr
+
+        end
+        
+        render :json => responseHash
+    end
 
 end
