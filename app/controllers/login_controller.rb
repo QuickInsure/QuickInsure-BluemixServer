@@ -6,7 +6,7 @@ class LoginController < ApplicationController
 	
 	def iciciTokenInitialize
 		#ICICI authentication params
-		client_id = "avdhut.vaidya@gmail.com"
+		$client_id = "avdhut.vaidya@gmail.com"
 		client_password = "ICIC8058"
 
 		reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
@@ -110,7 +110,7 @@ class LoginController < ApplicationController
                 # token = JSON.parse(response)[0]["token"]
                 # puts token
 
-                reqParams = {:client_id => client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
+                reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
                 requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
                 puts requestStr
                 response = Net::HTTP.get(requestStr)
