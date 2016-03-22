@@ -67,7 +67,7 @@ class LoginController < ApplicationController
 	def mobileAuth
         #Request params
         loginType = params[:loginType]
-        responseHash = {:status => false}
+        responseHash = {"status" => false}
 
         if loginType == "mobile"
             mobile = params[:mobile]
@@ -75,13 +75,13 @@ class LoginController < ApplicationController
     		if mobile.to_s != "" && password.to_s != ""
     			if mobile == "9999999999" && password == "123456"
     				responseHash = {
-    					:status => true,
-    					:data => {
-    						:name => "Avdhut Vaidya",
-    						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
-    						:aadhar => "123456",
-    						:gender => "Male"
+    					"status" => true,
+    					"data" => {
+    						"name" => "Avdhut Vaidya",
+    						"mobile" => "9999999999",
+    						"email" => "avdhut.vaidya@gmail.com",
+    						"aadhar" => "123456",
+    						"gender" => "Male"
     					}
     				}
     			end
@@ -92,13 +92,13 @@ class LoginController < ApplicationController
             if aadhar.to_s != "" && password.to_s != ""
                 if aadhar == "123456" && password == "123456"
     				responseHash = {
-    					:status => true,
-    					:data => {
-    						:name => "Avdhut Vaidya",
-    						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
-    						:aadhar => "123456",
-    						:gender => "Male"
+    					"status" => true,
+    					"data" => {
+    						"name" => "Avdhut Vaidya",
+    						"mobile" => "9999999999",
+    						"email" => "avdhut.vaidya@gmail.com",
+    						"aadhar" => "123456",
+    						"gender" => "Male"
     					}
     				}
                 end
@@ -109,13 +109,13 @@ class LoginController < ApplicationController
             if email.to_s != "" && password.to_s != ""
                 if email == "avdhut.vaidya@gmail.com" && password == "123456"
     				responseHash = {
-    					:status => true,
-    					:data => {
-    						:name => "Avdhut Vaidya",
-    						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
-    						:aadhar => "123456",
-    						:gender => "Male"
+    					"status" => true,
+    					"data" => {
+    						"name" => "Avdhut Vaidya",
+    						"mobile" => "9999999999",
+    						"email" => "avdhut.vaidya@gmail.com",
+    						"aadhar" => "123456",
+    						"gender" => "Male"
     					}
     				}
                 end
