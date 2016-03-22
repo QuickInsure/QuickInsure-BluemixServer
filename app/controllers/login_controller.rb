@@ -2,6 +2,19 @@ require 'net/http'
 require 'json'
 
 class LoginController < ApplicationController
+	before_filter :iciciTokenInitialize
+	
+	def iciciTokenInitialize
+		#ICICI authentication params
+		client_id = "avdhut.vaidya@gmail.com"
+		client_password = "ICIC8058"
+
+		reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
+		requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
+		response = Net::HTTP.get(requestStr)
+		puts response
+		$token = JSON.parse(response)[0]["token"]
+	end
 
     #Function to validate credentials
     def validateCredentials(str)
@@ -53,38 +66,51 @@ class LoginController < ApplicationController
     #Function validate credentials for app login
 	def mobileAuth
         #Request params
-        username = params[:username]
-		password = params[:password]
-        custid = params[:custid]
-        accountno = params[:accountno]
         loginType = params[:loginType]
 
-        #ICICI authentication params
-        client_id = "avdhut.vaidya@gmail.com"
-        client_password = "ICIC8058"
         token = ""
         response = false
 
-        if loginType != "icici" 
-    		if username.to_s != "" && password.to_s != ""
-    			if username == "avdhut.vaidya" && password == "Avdhut@2015"
+        if loginType == "mobile"
+            mobile = params[:mobile]
+            password = params[:password]
+    		if mobile.to_s != "" && password.to_s != ""
+    			if mobile == "9999999999" && password == "123456"
     				response = true
     			end
     		end
+        elsif loginType == "aadhar"
+            aadhar = params[:aadhar]
+            password = params[:password]
+            if aadhar.to_s != "" && password.to_s != ""
+                if aadhar == "123456" && password == "123456"
+                    response = true
+                end
+            end
+        elsif loginType == "email"
+            email = params[:email]
+            password = params[:password]
+            if email.to_s != "" && password.to_s != ""
+                if email == "avdhut.vaidya@gmail.com" && password == "123456"
+                    response = true
+                end
+            end
         else
+            custid = params[:custid]
+            accountno = params[:accountno]
             # errMsg = ""
             # credentials = username.to_s + "+" + password.to_s
             # isValidCredentials, errMsg = validateCredentials(credentials)
 
             # if isValidCredentials
-                reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
-                requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
-                response = Net::HTTP.get(requestStr)
-                puts response
-                token = JSON.parse(response)[0]["token"]
-                puts token
+                # reqParams = {:client_id => client_id.to_s, :password => client_password.to_s}
+                # requestStr = URI.parse("http://corporate_bank.mybluemix.net/corporate_banking/mybank/authenticate_client?#{reqParams.to_query}")
+                # response = Net::HTTP.get(requestStr)
+                # puts response
+                # token = JSON.parse(response)[0]["token"]
+                # puts token
 
-                reqParams = {:client_id => client_id.to_s, :token => token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
+                reqParams = {:client_id => client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
                 requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
                 puts requestStr
                 response = Net::HTTP.get(requestStr)
