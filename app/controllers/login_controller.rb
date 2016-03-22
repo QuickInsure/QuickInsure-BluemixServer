@@ -123,19 +123,18 @@ class LoginController < ApplicationController
         else
             custid = params[:custid]
             accountno = params[:accountno]
-            # errMsg = ""
-            # credentials = username.to_s + "+" + password.to_s
-            # isValidCredentials, errMsg = validateCredentials(credentials)
 
-            # if isValidCredentials
-                reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
-                requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
-                puts requestStr
-                responseHash = Net::HTTP.get(requestStr)
-            # else
-            #     responseHash["code"] = "999"
-            #     responseHash["message"] = errMsg.to_s
-            # end
+			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
+			requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
+			puts requestStr
+			responseHash = Net::HTTP.get(requestStr)
+
+			if !responseHash.is_empty?
+				reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => responseHash[1]["mobileno"].to_s, :emailid => ""}
+				requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls#{reqParams.to_query}")
+				puts requestStr
+				responseHash = Net::HTTP.get(requestStr)
+			end
         end
 		
         render :json => responseHash
