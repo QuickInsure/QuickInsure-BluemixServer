@@ -83,7 +83,7 @@ class LoginController < ApplicationController
     						:aadhar => "123456",
     						:gender => "Male"
     					}
-    				}
+    				}.to_json
     			end
     		end
         elsif loginType == "aadhar"
@@ -100,7 +100,7 @@ class LoginController < ApplicationController
     						:aadhar => "123456",
     						:gender => "Male"
     					}
-    				}
+    				}.to_json
                 end
             end
         elsif loginType == "email"
@@ -117,7 +117,7 @@ class LoginController < ApplicationController
     						:aadhar => "123456",
     						:gender => "Male"
     					}
-    				}
+    				}.to_json
                 end
             end
         else
@@ -138,7 +138,7 @@ class LoginController < ApplicationController
             # end
         end
 		
-        render :json => responseHash.to_json
+        render :json => responseHash
 	end
 
     def appAuthenticate
