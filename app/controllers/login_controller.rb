@@ -362,13 +362,11 @@ class LoginController < ApplicationController
             # custid = params[:custid]
             # accountno = params[:accountno]
 
-            reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custName => "swapnil", :mobileNo => "8976325523", :emailId => "swapskate@gmail.com", :manufacturere => "BAJAJ", :model => "BYK", :address => "MUMBAI", :rto => "MUMBAI", :regDt => "2016-02-08"}
-            requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getQuickQuote?#{reqParams.to_query}")
-            puts requestStr
-            responseHash = Net::HTTP.get(requestStr)
-            puts requestStr
-
-        end
+        reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custName => "swapnil", :mobileNo => "8976325523", :emailId => "swapskate@gmail.com", :manufacturere => "BAJAJ", :model => "BYK", :address => "MUMBAI", :rto => "MUMBAI", :regDt => "2016-02-08"}
+        requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getQuickQuote?#{reqParams.to_query}")
+        puts requestStr
+        responseHash = Net::HTTP.get(requestStr)
+        puts requestStr
         
         render :json => responseHash
     end
