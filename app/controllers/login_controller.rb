@@ -130,7 +130,7 @@ class LoginController < ApplicationController
 			response = Net::HTTP.get(requestStr)
 			responseHash = {:userData=>JSON.parse(response)}
 
-			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailid => "avdhut.vaidya@gmail.com"}
+			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailId => "avdhut.vaidya@gmail.com"}
 			requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls?#{reqParams.to_query}")
 			puts requestStr
 			response = Net::HTTP.get(requestStr)
