@@ -149,25 +149,25 @@ class LoginController < ApplicationController
 
 		if locate == "garage"
 			mapHash["Anand Garage"] = {
-				"address" => "Pandit Jawaharlal Nehru Rd, Industrial Area, Mulund West, Mumbai, Maharashtra 400080"
+				"address" => "Pandit Jawaharlal Nehru Rd, Industrial Area, Mulund West, Mumbai, Maharashtra 400080",
 				"phoneno" => "099209 03842",
 				"lattitude" => "19.161466",
 				"longitude" => "72.945368"
 			}
 			mapHash["Francis Auto Garage"] = {
-				"address" => "Doctor Baba Saheb Ambedkar Road, Old bdd chawl, Dadar East, Dadar, Mumbai, Maharashtra 400014"
+				"address" => "Doctor Baba Saheb Ambedkar Road, Old bdd chawl, Dadar East, Dadar, Mumbai, Maharashtra 400014",
 				"phoneno" => "098677 57277",
 				"lattitude" => "19.012993",
 				"longitude" => "72.844723"
 			}
 			mapHash["Allied Motor Garage"] = {
-				"address" => "193, Andheri Kurla Road, Andheri East, Hanuman Nagar, Andheri East, Mumbai, Maharashtra 400069"
+				"address" => "193, Andheri Kurla Road, Andheri East, Hanuman Nagar, Andheri East, Mumbai, Maharashtra 400069",
 				"phoneno" => "022 2683 1498",
 				"lattitude" => "19.114185",
 				"longitude" => "72.865652"
 			}
 			mapHash["Backbay Motor Garage"] = {
-				"address" => "T L Waswani Marg, Colaba, Colaba, Chamundeshwari Nagar, Cuffe Parade, Mumbai, Maharashtra 400005"
+				"address" => "T L Waswani Marg, Colaba, Colaba, Chamundeshwari Nagar, Cuffe Parade, Mumbai, Maharashtra 400005",
 				"phoneno" => "022 2215 3250",
 				"lattitude" => "18.914412",
 				"longitude" => "72.820272"
