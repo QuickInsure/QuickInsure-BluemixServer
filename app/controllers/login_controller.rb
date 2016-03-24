@@ -127,14 +127,15 @@ class LoginController < ApplicationController
 			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :custid => custid.to_s, :accountno => accountno.to_s}
 			requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
 			puts requestStr
-			responseHash = Net::HTTP.get(requestStr)
+			response = Net::HTTP.get(requestStr)
+			responseHash = {:userData=>JSON.parse(response)}
 
-			if responseHash != ""
-				reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => JSON.parse(responseHash)[1]["mobileno"].to_s, :emailid => ""}
-				requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls?#{reqParams.to_query}")
-				puts requestStr
-				responseHash = Net::HTTP.get(requestStr)
-			end
+			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailid => "avdhut.vaidya@gmail.com"}
+			requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls?#{reqParams.to_query}")
+			puts requestStr
+			response = Net::HTTP.get(requestStr)
+			responseHash[:policyData] = JSON.parse(response)
+			responseHash = responseHash.to_json
         end
 		
         render :json => responseHash
