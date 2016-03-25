@@ -207,8 +207,7 @@ class LoginController < ApplicationController
 		reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailId => "avdhut.vaidya@gmail.com"}
 		requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getRenewalNotice?#{reqParams.to_query}")
 		puts requestStr
-		responseHash = JSON.parse(Net::HTTP.get(requestStr)
-		responseHash = responseHash.to_json
+		responseHash = Net::HTTP.get(requestStr)
 		
         render :json => responseHash
 	end
