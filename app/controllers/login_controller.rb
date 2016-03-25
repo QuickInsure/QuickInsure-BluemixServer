@@ -213,8 +213,6 @@ class LoginController < ApplicationController
 	end
 
     def getQuickQuote
-    	p "in get Quick Quote"
-
         carname = params[:carname]
         registrationNum = params[:registrationNum]
         regYear = params[:regYear]
