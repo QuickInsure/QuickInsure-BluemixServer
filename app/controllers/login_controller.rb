@@ -89,7 +89,7 @@ class LoginController < ApplicationController
 			requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls?#{reqParams.to_query}")
 			puts requestStr
 			response = JSON.parse(Net::HTTP.get(requestStr))
-			responseHash[:code] = response[0]["code"]
+			responseHash[:code] = response[0]["code"] if response[0]
 			responseHash[:policyData] = response[1]
 			responseHash = responseHash.to_json
         end
