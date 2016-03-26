@@ -4,8 +4,9 @@ require 'json'
 class LoginController < ApplicationController
 	before_filter :iciciTokenInitialize
 	
+
+	#Method to generate ICICI token on each URL hit
 	def iciciTokenInitialize
-		#ICICI authentication params
 		$client_id = "avdhut.vaidya@gmail.com"
 		client_password = "ICIC8058"
 
@@ -16,54 +17,8 @@ class LoginController < ApplicationController
 		$token = JSON.parse(response)[0]["token"]
 	end
 
-    #Function to validate credentials
-    def validateCredentials(str)
-        canAuthenticate = true
-        clientId,token,accNo,custid,days = ""
 
-        if str.split("+").length == 3
-            clientId,token,accNo = str.split("+")[0],str.split("+")[1],str.split("+")[2]
-        elsif str.split("+").length == 4 && type == "number"
-            clientId,token,accNo,custid = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]
-        elsif str.split("+").length == 4 && type == "days"
-            clientId,token,accNo,days = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]     
-        end 
-
-        if clientId.to_s.length == 0
-            errMsg = "Client Id cannot be blank."
-            canAuthenticate = false
-        end
-        
-        if !clientId.to_s.length >= 10 || !clientId.to_s.length <= 50
-            errMsg = "Client Id should be greater than 10 and less than 50 characters"
-            canAuthenticate = false
-        end
-
-        if token.to_s.length != 12
-            errMsg = "Invalid token"
-            canAuthenticate = false
-        end
-        
-        if accNo.to_s.length != 16
-           errMsg = "Invalid account number"
-           canAuthenticate = false
-        end 
-
-        if custid.length != 8 
-            errMsg = "Invalid Customer Id"
-            canAuthenticate = false
-        end
-
-        if !days.to_s.length >= 1 || !days.to_s.length <= 10
-            errMsg = "Number of days should be greater than or equal to 1 and less than or equal to 10"
-            canAuthenticate = false
-        end
-
-        return canAuthenticate, errMsg  
-    end
-
-
-    #Function validate credentials for app login
+    #Method validate credentials for app login & fetch account summary
 	def mobileAuth
         #Request params
         loginType = params[:loginType]
@@ -77,9 +32,9 @@ class LoginController < ApplicationController
     				responseHash = {
     					:status => "valid",
     					:data => {
-    						:name => "Avdhut Vaidya",
+    						:name => "John Smith",
     						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
+    						:email => "john.smith@xyz.com",
     						:aadhar => "123456",
     						:gender => "Male"
     					}
@@ -94,9 +49,9 @@ class LoginController < ApplicationController
     				responseHash = {
     					:status => "valid",
     					:data => {
-    						:name => "Avdhut Vaidya",
+    						:name => "John Smith",
     						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
+    						:email => "john.smith@xyz.com",
     						:aadhar => "123456",
     						:gender => "Male"
     					}
@@ -107,13 +62,13 @@ class LoginController < ApplicationController
             email = params[:email]
             password = params[:password]
             if email.to_s != "" && password.to_s != ""
-                if email == "avdhut.vaidya@gmail.com" && password == "123456"
+                if email == "john.smith@xyz.com" && password == "123456"
     				responseHash = {
     					:status => "valid",
     					:data => {
-    						:name => "Avdhut Vaidya",
+    						:name => "John Smith",
     						:mobile => "9999999999",
-    						:email => "avdhut.vaidya@gmail.com",
+    						:email => "john.smith@xyz.com",
     						:aadhar => "123456",
     						:gender => "Male"
     					}
@@ -143,6 +98,7 @@ class LoginController < ApplicationController
 	end
 
 
+	#Method to get locations of Branch/ATMs/Garage
 	def getBranchATMGarage
 		locate = params[:locate]
 		mapHash = {}
@@ -203,6 +159,7 @@ class LoginController < ApplicationController
 	end
 
 
+	#Method to renew policy and get response
 	def policyRenewal
 		reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailId => "avdhut.vaidya@gmail.com"}
 		requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getRenewalNotice?#{reqParams.to_query}")
@@ -212,6 +169,8 @@ class LoginController < ApplicationController
         render :json => responseHash
 	end
 
+
+	#Method to get a quick quote based on passed data
     def getQuickQuote
         carname = params[:carname]
         registrationNum = params[:registrationNum]
@@ -238,7 +197,53 @@ class LoginController < ApplicationController
 
 
 
+######################################Other Methods###############################################
 
+    #Function to validate credentials
+    def validateCredentials(str)
+        canAuthenticate = true
+        clientId,token,accNo,custid,days = ""
+
+        if str.split("+").length == 3
+            clientId,token,accNo = str.split("+")[0],str.split("+")[1],str.split("+")[2]
+        elsif str.split("+").length == 4 && type == "number"
+            clientId,token,accNo,custid = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]
+        elsif str.split("+").length == 4 && type == "days"
+            clientId,token,accNo,days = str.split("+")[0],str.split("+")[1],str.split("+")[2],str.split("+")[3]     
+        end 
+
+        if clientId.to_s.length == 0
+            errMsg = "Client Id cannot be blank."
+            canAuthenticate = false
+        end
+        
+        if !clientId.to_s.length >= 10 || !clientId.to_s.length <= 50
+            errMsg = "Client Id should be greater than 10 and less than 50 characters"
+            canAuthenticate = false
+        end
+
+        if token.to_s.length != 12
+            errMsg = "Invalid token"
+            canAuthenticate = false
+        end
+        
+        if accNo.to_s.length != 16
+           errMsg = "Invalid account number"
+           canAuthenticate = false
+        end 
+
+        if custid.length != 8 
+            errMsg = "Invalid Customer Id"
+            canAuthenticate = false
+        end
+
+        if !days.to_s.length >= 1 || !days.to_s.length <= 10
+            errMsg = "Number of days should be greater than or equal to 1 and less than or equal to 10"
+            canAuthenticate = false
+        end
+
+        return canAuthenticate, errMsg  
+    end
 
 
     def appAuthenticate
