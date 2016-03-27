@@ -83,8 +83,7 @@ class LoginController < ApplicationController
 			requestStr = URI.parse("http://retailbanking.mybluemix.net/banking/icicibank/account_summary?#{reqParams.to_query}")
 			puts requestStr
 			response = JSON.parse(Net::HTTP.get(requestStr))
-			responseHash[:code] = response[0]["code"]
-			responseHash = {:userData=>response[1]}
+			responseHash = {:userData => response[1], :code => response[0]["code"]}
 
 			reqParams = {:client_id => $client_id.to_s, :token => $token.to_s, :mobileNo => "9820120461", :emailId => "avdhut.vaidya@gmail.com"}
 			requestStr = URI.parse("http://generalinsurance.mybluemix.net/banking/icicibank_general_insurance/getCustomerDtls?#{reqParams.to_query}")
